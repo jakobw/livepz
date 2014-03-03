@@ -1,0 +1,27 @@
+body {
+  font-family: sans-serif;
+}
+
+path {
+  stroke: #06a;
+  stroke-width: 1;
+  fill: none;
+}
+
+#chart {
+  position: relative;
+}
+
+#info {
+  position: absolute;
+  padding: 15px 0 0 15px;
+  font-size: 20px;
+}
+
+#line {
+  width: 1px;
+  height: 800px;
+  background: #ccc;
+  position: absolute;
+  z-index: 9999;
+}
