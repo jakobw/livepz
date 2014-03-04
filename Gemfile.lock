@@ -11,6 +11,7 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.2)
       rack
+    redis (3.0.7)
     sinatra (1.4.3)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -24,4 +25,5 @@ PLATFORMS
 DEPENDENCIES
   foreman
   nokogiri (~> 1.6.1)
+  redis
   sinatra (= 1.4.3)

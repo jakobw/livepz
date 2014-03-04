@@ -2,6 +2,12 @@ require 'sinatra'
 require 'nokogiri'
 require 'open-uri'
 require 'json'
+require 'redis'
+
+Encoding.default_external = Encoding::UTF_8
+
+uri = URI.parse ENV["REDISTOGO_URL"]
+REDIS = Redis.new host: uri.host, port: uri.port, password: uri.password
 
 get '/' do
   'hi.'
@@ -14,7 +20,7 @@ get '/livepz/:id' do |id|
     'not found :('
   else
     erb :livepz, locals: {
-      name: data[:name].content,
+      name: data[:name],
       history: data[:history],
       start: data[:start]
     }
@@ -22,6 +28,9 @@ get '/livepz/:id' do |id|
 end
 
 def get_history(id)
+  cached = REDIS.get id
+  return JSON.parse(cached, symbolize_names: true) unless cached.nil?
+
   doc = Nokogiri::HTML(open("http://bettv.tischtennislive.de/default.aspx?L1=Public&L2=Kontakt&L2P=60261&MID=#{id}&Page1=Bilanz&SA=96&Page=EntwicklungTTR"))
   history = []
   start = nil
@@ -35,9 +44,12 @@ def get_history(id)
     start = match_data
   end
 
-  return {
+  data = {
     history: history.reverse,
-    name: doc.css('.ui-widget-header.PageHeadline nobr').first,
+    name: doc.css('.ui-widget-header.PageHeadline nobr').first.content,
     start: start && start[-3].to_i
   }
+
+  REDIS.set id, data.to_json
+  data
 end
