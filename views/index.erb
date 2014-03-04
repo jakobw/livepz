@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="/styles.css">
+  <title>LivePZ</title>
+</head>
+<body>
+  <form class="form" id="player-id">
+    <input type="text" id="id" placeholder="Spieler-ID" autofocus="autofocus">
+    <input type="submit" value="LivePZ-Entwicklung anzeigen">
+  </div>
+  <script type="text/javascript">
+    document.getElementById('player-id').onsubmit = function () {
+      var id = document.getElementById('id').value;
+
+      if (id) {
+        window.location.href = '/livepz/' + id;
+      }
+
+      return false; // "preventDefault()"
+    };
+  </script>
+</body>
+</html>
