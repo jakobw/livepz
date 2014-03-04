@@ -46,7 +46,7 @@ def get_history(id)
 
   data = {
     history: history.reverse,
-    name: doc.css('.ui-widget-header.PageHeadline nobr').first.content,
+    name: doc.css('.ui-widget-header.PageHeadline nobr').first.inner_text,
     start: start && start[-3].to_i
   }
 
