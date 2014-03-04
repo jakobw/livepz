@@ -50,6 +50,6 @@ def get_history(id)
     start: start && start[-3].to_i
   }
 
-  REDIS.set id, data.to_json
+  REDIS.setex id, 3600 * 12, data.to_json
   data
 end
