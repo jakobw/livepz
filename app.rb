@@ -13,7 +13,7 @@ get '/' do
   erb :index
 end
 
-get '/livepz/:id' do |id|
+get '/:id' do |id|
   data = get_history id
 
   if data[:history].empty? || data[:name].nil?
