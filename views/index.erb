@@ -6,9 +6,17 @@
 </head>
 <body>
   <form class="form" id="player-id">
-    <input type="text" id="id" placeholder="Spieler-ID" autofocus="autofocus">
+    <input type="text" id="id" placeholder="Spieler-ID*" autofocus="autofocus">
     <input type="submit" value="LivePZ-Entwicklung anzeigen">
-  </div>
+  </form>
+  <p class="info">
+    <big>*</big>Die Spieler-ID findet man in der Mannschaftsübersicht bei TischtennisLive nach der Auswahl eines Spielers in der Adresszeile unter L3P.
+    <br>Bsp.: http://bettv.tischtennislive.de/?L1=Ergebnisse&amp;L2=TTStaffeln&amp;L2P=4864&amp;L3=Spieler&amp;L3P=<b>57152</b>&amp;Page=Rueckrunde
+  </p>
+  <p class="info">
+    Oder bei Benutzung der TischtennisLive-Suchfunktion unter MID.
+    <br>Bsp.: http://bettv.tischtennislive.de/default.aspx?L1=Public&amp;L2=Kontakt&amp;L2P=60261&amp;MID=<b>57152</b>&amp;Page=Bilanz&amp;SA=96
+  </p>
   <script type="text/javascript">
     document.getElementById('player-id').onsubmit = function () {
       var id = document.getElementById('id').value;

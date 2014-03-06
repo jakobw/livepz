@@ -18,6 +18,13 @@ path {
   font-size: 20px;
 }
 
+.info {
+  font-size: 15px;
+}
+.info b {
+  color: #f00;
+}
+
 #line {
   width: 1px;
   height: 800px;
