@@ -32,8 +32,19 @@ def get_history(id)
   return JSON.parse(cached, symbolize_names: true) unless cached.nil?
 
   doc = Nokogiri::HTML(open("http://bettv.tischtennislive.de/default.aspx?L1=Public&L2=Kontakt&L2P=60261&MID=#{id}&Page1=Bilanz&SA=96&Page=EntwicklungTTR"))
-  history = []
-  start = nil
+  start, history = scrape_matches doc
+  data = {
+    history: history.reverse,
+    name: doc.css('.ui-widget-header.PageHeadline nobr').first.inner_text,
+    start: start && start[-3].to_i
+  }
+
+  REDIS.setex id, 3600 * 12, data.to_json
+  data
+end
+
+def scrape_matches(doc)
+  start, history = nil, []
 
   1.upto(100) do |i| # 100 is the maximum number of matches displayed
     match = doc.css("#Match#{i}, #Match#{i}_0")
@@ -44,12 +55,5 @@ def get_history(id)
     start = match_data
   end
 
-  data = {
-    history: history.reverse,
-    name: doc.css('.ui-widget-header.PageHeadline nobr').first.inner_text,
-    start: start && start[-3].to_i
-  }
-
-  REDIS.setex id, 3600 * 12, data.to_json
-  data
+  [start, history]
 end
